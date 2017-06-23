@@ -146,9 +146,9 @@ dependencies {
 ```
 You can find the latest version in the releases tab above: https://github.com/adroitandroid/ChipCloud/releases
 
-##Licence
+## Licence
 
-Full licence here: https://github.com/fiskurgit/ChipCloud/blob/master/LICENSE [remains same in my version]
+Full licence here: https://github.com/fiskurgit/ChipCloud/blob/master/LICENSE
 
 In short:
 
