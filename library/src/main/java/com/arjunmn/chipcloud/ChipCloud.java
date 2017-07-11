@@ -1,4 +1,4 @@
-package com.adroitandroid.chipcloud;
+package com.arjunmn.chipcloud;
 
 import android.content.Context;
 import android.content.res.TypedArray;

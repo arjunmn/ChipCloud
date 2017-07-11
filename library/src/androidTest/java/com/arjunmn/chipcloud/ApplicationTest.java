@@ -1,4 +1,4 @@
-package eu.fiskur.chipcloud;
+package com.arjunmn.chipcloud;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
