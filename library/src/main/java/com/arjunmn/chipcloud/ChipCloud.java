@@ -30,6 +30,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
     private ChipListener chipListener;
 
     private Object chipData;
+    private boolean removable;
 
     public ChipCloud(Context context) {
         super(context);
@@ -178,6 +179,10 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         this.allCaps = isAllCaps;
     }
 
+    public void setRemovable(boolean isRemovable){
+        this.removable = isRemovable;
+    }
+
     public void setMinimumHorizontalSpacing(int spacingInPx) {
         this.minHorizontalSpacing = spacingInPx;
     }
@@ -188,6 +193,10 @@ public class ChipCloud extends FlowLayout implements ChipListener {
 
     public void setChipListener(ChipListener chipListener) {
         this.chipListener = chipListener;
+    }
+
+    public void setChipData(Object data){
+        this.chipData = data;
     }
 
     public void addChips(String[] labels) {
@@ -203,9 +212,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
     }
 
     public void addChip(Object data){
+        chipData = data;
         Chip chip = new Chip.ChipBuilder().index(getChildCount())
                 .label(data.toString())
-                .chipData(data)
+                .chipData(chipData)
+                .removable(removable)
                 .typeface(typeface)
                 .textSize(textSizePx)
                 .allCaps(allCaps)
@@ -229,6 +240,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                 .typeface(typeface)
                 .textSize(textSizePx)
                 .allCaps(allCaps)
+                .removable(removable)
                 .selectedColor(selectedColor)
                 .selectedFontColor(selectedFontColor)
                 .unselectedColor(unselectedColor)
@@ -289,6 +301,13 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         }
     }
 
+    @Override
+    public void chipRemoved(int index, Object chipData) {
+        if(chipListener != null){
+            chipListener.chipRemoved(index, chipData);
+        }
+    }
+
     public boolean isSelected(int index) {
         if (index > 0 && index < getChildCount()) {
             Chip chip = (Chip) getChildAt(index);
@@ -316,6 +335,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         private int minHorizontalSpacing = -1;
         private int verticalSpacing = -1;
         private Object[] chipDatas = null;
+        private Boolean removable = null;
 
         public Configure chipDatas(Object[] data){
             this.chipDatas = data;
@@ -395,6 +415,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
             return this;
         }
 
+        public Configure removable(boolean isRemovable){
+            this.removable = isRemovable;
+            return this;
+        }
+
         public Configure minHorizontalSpacing(int spacingInPx) {
             this.minHorizontalSpacing = spacingInPx;
             return this;
@@ -412,6 +437,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
             if (typeface != null) chipCloud.setTypeface(typeface);
             if (textSize != -1) chipCloud.setTextSize(textSize);
             if (allCaps != null) chipCloud.setAllCaps(allCaps);
+            if (removable != null) chipCloud.setRemovable(removable);
             if (selectedColor != -1) chipCloud.setSelectedColor(selectedColor);
             if (selectedFontColor != -1) chipCloud.setSelectedFontColor(selectedFontColor);
             if (deselectedColor != -1) chipCloud.setUnselectedColor(deselectedColor);
@@ -442,5 +468,13 @@ public class ChipCloud extends FlowLayout implements ChipListener {
             chipCloud.invalidate();
             chipCloud.requestLayout();
         }
+
+        public void removeChip(int index){
+            chipCloud.removeViewAt(index);
+            chipCloud.invalidate();
+            chipCloud.requestLayout();
+        }
+
+
     }
 }

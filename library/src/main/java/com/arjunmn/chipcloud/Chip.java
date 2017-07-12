@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 public class Chip extends android.support.v7.widget.AppCompatTextView implements View.OnClickListener {
 
@@ -25,6 +26,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
     private boolean isLocked = false;
     private ChipCloud.Mode mode;
     private Object chipData = null;
+    private boolean removable = false;
 
     public void setChipData(Object object){
         this.chipData = object;
@@ -36,6 +38,10 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
     public void setChipListener(ChipListener listener) {
         this.listener = listener;
+    }
+
+    public void setChipRemovable(boolean isRemovable){
+        this.removable = isRemovable;
     }
 
     public Chip(Context context) {
@@ -55,7 +61,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
     public void initChip(Context context, int index, String label, Typeface typeface, int textSizePx,
                          boolean allCaps, int selectedColor, int selectedFontColor, int unselectedColor,
-                         int unselectedFontColor, ChipCloud.Mode mode) {
+                         int unselectedFontColor, ChipCloud.Mode mode, Object chipData, boolean removable) {
 
         this.index = index;
         this.selectedFontColor = selectedFontColor;
@@ -111,6 +117,8 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
         if (textSizePx > 0) {
             setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx);
         }
+        setChipData(chipData);
+        setChipRemovable(removable);
     }
 
     public void setLocked(boolean isLocked) {
@@ -131,6 +139,10 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.remove_chip){
+            listener.chipRemoved(index, chipData);
+            return;
+        }
         if (mode != ChipCloud.Mode.NONE)
             if (selected && !isLocked) {
                 //set as unselected
@@ -202,6 +214,12 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
         private ChipCloud.Mode mode;
 
         private Object chipData;
+        private boolean removable = false;
+
+        public ChipBuilder removable(boolean isRemovable){
+            this.removable = isRemovable;
+            return this;
+        }
 
         public ChipBuilder chipData(Object data){
             this.chipData = data;
@@ -280,13 +298,20 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
         public Chip build(Context context) {
             Chip chip = (Chip) LayoutInflater.from(context).inflate(R.layout.chip, null);
+            ImageView iv = (ImageView) chip.findViewById(R.id.remove_chip);
+            if(removable){
+                iv.setVisibility(VISIBLE);
+            }else{
+                iv.setVisibility(GONE);
+            }
             chip.initChip(context, index, label, typeface, textSizePx, allCaps, selectedColor,
-                    selectedFontColor, unselectedColor, unselectedFontColor, mode);
+                    selectedFontColor, unselectedColor, unselectedFontColor, mode, chipData, removable);
             chip.setSelectTransitionMS(selectTransitionMS);
             chip.setDeselectTransitionMS(deselectTransitionMS);
             chip.setChipListener(chipListener);
             chip.setHeight(chipHeight);
             chip.setChipData(chipData);
+            chip.setChipRemovable(removable);
             return chip;
         }
     }

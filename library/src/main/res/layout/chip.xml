@@ -23,6 +23,7 @@
 
     <ImageView android:id="@+id/remove_chip"
         android:visibility="visible"
+        android:clickable="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
