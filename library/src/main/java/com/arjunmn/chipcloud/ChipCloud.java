@@ -29,6 +29,8 @@ public class ChipCloud extends FlowLayout implements ChipListener {
 
     private ChipListener chipListener;
 
+    private Object chipData;
+
     public ChipCloud(Context context) {
         super(context);
         this.context = context;
@@ -194,6 +196,33 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         }
     }
 
+    public void addChips(Object[] data){
+        for(Object object : data){
+            addChip(object);
+        }
+    }
+
+    public void addChip(Object data){
+        Chip chip = new Chip.ChipBuilder().index(getChildCount())
+                .label(data.toString())
+                .chipData(data)
+                .typeface(typeface)
+                .textSize(textSizePx)
+                .allCaps(allCaps)
+                .selectedColor(selectedColor)
+                .selectedFontColor(selectedFontColor)
+                .unselectedColor(unselectedColor)
+                .unselectedFontColor(unselectedFontColor)
+                .selectTransitionMS(selectTransitionMS)
+                .deselectTransitionMS(deselectTransitionMS)
+                .chipHeight(chipHeight)
+                .chipListener(this)
+                .mode(mode)
+                .build(context);
+
+        addView(chip);
+    }
+
     public void addChip(String label) {
         Chip chip = new Chip.ChipBuilder().index(getChildCount())
                 .label(label)
@@ -230,8 +259,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
     }
 
     @Override
-    public void chipSelected(int index) {
-
+    public void chipSelected(int index, Object data) {
         switch (mode) {
             case SINGLE:
             case REQUIRED:
@@ -250,14 +278,14 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         }
 
         if (chipListener != null) {
-            chipListener.chipSelected(index);
+            chipListener.chipSelected(index, data);
         }
     }
 
     @Override
-    public void chipDeselected(int index) {
+    public void chipDeselected(int index, Object data) {
         if (chipListener != null) {
-            chipListener.chipDeselected(index);
+            chipListener.chipDeselected(index, data);
         }
     }
 
@@ -287,6 +315,12 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         private int textSize = -1;
         private int minHorizontalSpacing = -1;
         private int verticalSpacing = -1;
+        private Object[] chipDatas = null;
+
+        public Configure chipDatas(Object[] data){
+            this.chipDatas = data;
+            return this;
+        }
 
         public Configure chipCloud(ChipCloud chipCloud) {
             this.chipCloud = chipCloud;
@@ -387,14 +421,22 @@ public class ChipCloud extends FlowLayout implements ChipListener {
             if (minHorizontalSpacing != -1) chipCloud.setMinimumHorizontalSpacing(minHorizontalSpacing);
             if (verticalSpacing != -1) chipCloud.setVerticalSpacing(verticalSpacing);
             chipCloud.setChipListener(chipListener);
-            chipCloud.addChips(labels);
+            if(chipDatas != null){
+                chipCloud.addChips(chipDatas);
+            }else{
+                chipCloud.addChips(labels);
+            }
         }
 
         public void update() {
             int childCount = chipCloud.getChildCount();
             for (int i = 0; i < childCount; i++) {
                 Chip chip = (Chip) chipCloud.getChildAt(i);
-                chip.setText(labels[i]);
+                if(chipDatas == null){
+                    chip.setText(labels[i]);
+                }else{
+                    chip.setText((chipDatas[i]).toString());
+                }
                 chip.invalidate();
             }
             chipCloud.invalidate();

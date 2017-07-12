@@ -1,7 +1,7 @@
 package com.arjunmn.chipcloud;
 
 public interface ChipListener {
-    void chipSelected(int index);
+    void chipSelected(int index, Object chipData);
 
-    void chipDeselected(int index);
+    void chipDeselected(int index, Object chipData);
 }

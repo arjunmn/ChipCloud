@@ -24,6 +24,15 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
     private int deselectTransitionMS = 500;
     private boolean isLocked = false;
     private ChipCloud.Mode mode;
+    private Object chipData = null;
+
+    public void setChipData(Object object){
+        this.chipData = object;
+    }
+
+    public Object getChipData(){
+        return this.chipData;
+    }
 
     public void setChipListener(ChipListener listener) {
         this.listener = listener;
@@ -127,7 +136,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
                 //set as unselected
                 unselect();
                 if (listener != null) {
-                    listener.chipDeselected(index);
+                    listener.chipDeselected(index, chipData);
                 }
             } else if (!selected) {
                 //set as selected
@@ -135,7 +144,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
                 setTextColor(selectedFontColor);
                 if (listener != null) {
-                    listener.chipSelected(index);
+                    listener.chipSelected(index, chipData);
                 }
             }
 
@@ -147,7 +156,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
         crossfader.startTransition(selectTransitionMS);
         setTextColor(selectedFontColor);
         if (listener != null) {
-            listener.chipSelected(index);
+            listener.chipSelected(index, chipData);
         }
     }
 
@@ -191,6 +200,13 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
 
         private ChipListener chipListener;
         private ChipCloud.Mode mode;
+
+        private Object chipData;
+
+        public ChipBuilder chipData(Object data){
+            this.chipData = data;
+            return this;
+        }
 
         public ChipBuilder index(int index) {
             this.index = index;
@@ -270,6 +286,7 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
             chip.setDeselectTransitionMS(deselectTransitionMS);
             chip.setChipListener(chipListener);
             chip.setHeight(chipHeight);
+            chip.setChipData(chipData);
             return chip;
         }
     }
