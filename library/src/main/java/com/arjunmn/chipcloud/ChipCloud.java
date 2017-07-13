@@ -471,8 +471,13 @@ public class ChipCloud extends FlowLayout implements ChipListener {
 
         public void removeChip(int index){
             chipCloud.removeViewAt(index);
-            chipCloud.invalidate();
-            chipCloud.requestLayout();
+            for (int i = index + 1; i < chipCloud.getChildCount(); i++) {
+                Chip chip = (Chip) chipCloud.getChildAt(i);
+                chip.setIndex(i - 1);
+                labels[i - 1] = labels[i];
+                chipDatas[i - 1] = chipDatas[i];
+            }
+            update();
         }
 
 

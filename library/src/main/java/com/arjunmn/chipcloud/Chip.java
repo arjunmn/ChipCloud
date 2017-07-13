@@ -138,6 +138,10 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
         this.deselectTransitionMS = deselectTransitionMS;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     private void init() {
         setOnClickListener(this);
     }
