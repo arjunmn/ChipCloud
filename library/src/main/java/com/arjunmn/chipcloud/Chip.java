@@ -312,13 +312,22 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
         }
 
         public Chip build(Context context) {
-            Chip chip = (Chip) LayoutInflater.from(context).inflate(R.layout.chip, null);
+            final Chip chip = (Chip) LayoutInflater.from(context).inflate(R.layout.chip, null);
             ImageView iv = (ImageView) chip.findViewById(R.id.remove_chip);
             if(removable){
                 iv.setVisibility(VISIBLE);
             }else{
                 iv.setVisibility(GONE);
             }
+            iv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (chipListener != null) {
+                        //chipListener.chipSelected(index, chipData);
+                        chip.onClick(v);
+                    }
+                }
+            });
             chip.initChip(context, index, label, typeface, textSizePx, allCaps, selectedColor,
                     selectedFontColor, unselectedColor, unselectedFontColor, mode, chipData, removable);
             chip.setSelectTransitionMS(selectTransitionMS);
