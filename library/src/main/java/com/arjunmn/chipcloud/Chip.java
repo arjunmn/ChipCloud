@@ -6,14 +6,18 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewGroupCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-public class Chip extends android.support.v7.widget.AppCompatTextView implements View.OnClickListener {
+public class Chip extends ConstraintLayout implements View.OnClickListener {
 
     private int index = -1;
     private boolean selected = false;
@@ -309,10 +313,36 @@ public class Chip extends android.support.v7.widget.AppCompatTextView implements
             chip.setSelectTransitionMS(selectTransitionMS);
             chip.setDeselectTransitionMS(deselectTransitionMS);
             chip.setChipListener(chipListener);
-            chip.setHeight(chipHeight);
+            chip.setMinimumHeight(chipHeight);
+            chip.setMaxHeight(chipHeight); // Hack to test if it works with CL
             chip.setChipData(chipData);
             chip.setChipRemovable(removable);
             return chip;
         }
+    }
+
+    public void setText(String text){
+        TextView tv = (TextView) this.findViewById(R.id.chip);
+        tv.setText(text);
+    }
+
+    public void setAllCaps(boolean allCaps){
+        TextView tv = (TextView) this.findViewById(R.id.chip);
+        tv.setAllCaps(allCaps);
+    }
+
+    public void setTypeface(Typeface typeface){
+        TextView tv = (TextView) this.findViewById(R.id.chip);
+        tv.setTypeface(typeface);
+    }
+
+    public void setTextSize(int mode, int size){
+        TextView tv = (TextView) this.findViewById(R.id.chip);
+        tv.setTextSize(mode, size);
+    }
+
+    public void setTextColor(int color){
+        TextView tv = (TextView) this.findViewById(R.id.chip);
+        tv.setTextColor(color);
     }
 }
