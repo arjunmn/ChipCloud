@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 
 public class ChipCloud extends FlowLayout implements ChipListener {
 
@@ -456,11 +457,15 @@ public class ChipCloud extends FlowLayout implements ChipListener {
 
         public void update() {
             int childCount = chipCloud.getChildCount();
+            Log.d("Chip Count", Integer.toString(childCount));
             for (int i = 0; i < childCount; i++) {
+                Log.d("Chip Index", Integer.toString(i));
                 Chip chip = (Chip) chipCloud.getChildAt(i);
                 if(chipDatas == null){
+                    Log.d("Chip Label", labels[i]);
                     chip.setText(labels[i]);
                 }else{
+                    Log.d("Chip Data", chipDatas[i].toString());
                     chip.setText((chipDatas[i]).toString());
                 }
                 chip.invalidate();
