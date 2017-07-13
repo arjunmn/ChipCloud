@@ -479,8 +479,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
             for (int i = index + 1; i < chipCloud.getChildCount(); i++) {
                 Chip chip = (Chip) chipCloud.getChildAt(i);
                 chip.setIndex(i - 1);
-                labels[i - 1] = labels[i];
-                chipDatas[i - 1] = chipDatas[i];
+                if(chipDatas != null){
+                    chipDatas[i - 1] = chipDatas[i];
+                }else{
+                    labels[i - 1] = labels[i];
+                }
             }
             update();
         }
