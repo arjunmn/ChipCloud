@@ -489,7 +489,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                     labels[i - 1] = labels[i];
                 }
             }
-            update();
+            //update();
         }
 
 
