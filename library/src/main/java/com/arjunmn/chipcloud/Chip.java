@@ -10,6 +10,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewGroupCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,7 +144,17 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if(v instanceof TextView){
+            Log.d("Chip OnClick TV", Integer.toString(v.getId()));
+        }
+        if(v instanceof ImageView){
+            Log.d("Chip OnClick IV", Integer.toString(v.getId()));
+        }
+        if(v instanceof Chip){
+            Log.d("Chip OnClick C", Integer.toString(v.getId()));
+        }
         if(v.getId() == R.id.remove_chip){
+            Log.d("Chip OnClick ID", Integer.toString(v.getId()));
             listener.chipRemoved(index, chipData);
             return;
         }
