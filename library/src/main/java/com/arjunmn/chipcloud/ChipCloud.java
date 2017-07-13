@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class ChipCloud extends FlowLayout implements ChipListener {
 
     public enum Mode {
@@ -206,7 +208,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         }
     }
 
-    public void addChips(Object[] data){
+    public void addChips(ArrayList<Object> data){
         for(Object object : data){
             addChip(object);
         }
@@ -335,10 +337,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         private int textSize = -1;
         private int minHorizontalSpacing = -1;
         private int verticalSpacing = -1;
-        private Object[] chipDatas = null;
+        //private Object[] chipDatas = null;
+        private ArrayList<Object> chipDatas = null;
         private Boolean removable = null;
 
-        public Configure chipDatas(Object[] data){
+        public Configure chipDatas(ArrayList<Object> data){
             this.chipDatas = data;
             return this;
         }
@@ -465,8 +468,12 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                     Log.d("Chip Label", labels[i]);
                     chip.setText(labels[i]);
                 }else{
-                    Log.d("Chip Data", chipDatas[i].toString());
-                    chip.setText((chipDatas[i]).toString());
+                    Log.d("Chip Datas", Integer.toString(chipDatas.size()));
+                    for (int j = 0; j < chipDatas.size(); j++) {
+                        Log.d("Chip Data j", chipDatas.get(j).toString());
+                    }
+                    Log.d("Chip Data", chipDatas.get(i).toString());
+                    chip.setText((chipDatas.get(i)).toString());
                 }
                 chip.invalidate();
             }
@@ -480,7 +487,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                 Chip chip = (Chip) chipCloud.getChildAt(i);
                 chip.setIndex(i - 1);
                 if(chipDatas != null){
-                    chipDatas[i - 1] = chipDatas[i];
+                    chipDatas.set(i - 1, chipDatas.get(i));
                 }else{
                     labels[i - 1] = labels[i];
                 }
