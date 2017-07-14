@@ -484,11 +484,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                 Chip chip = (Chip) chipCloud.getChildAt(i);
                 Log.d("Chip Child, Index", chip.toString() + ", " + Integer.toString(i));
                 chip.setIndex(i - 1);
-                if(chipDatas != null){
+                /*if(chipDatas != null){
                     chipDatas[i - 1] = chipDatas[i];
                 }else{
                     labels[i - 1] = labels[i];
-                }
+                }*/
             }
             //update();
         }
