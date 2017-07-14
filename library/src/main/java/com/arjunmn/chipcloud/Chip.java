@@ -149,6 +149,7 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.remove_chip){
+            Log.d("Chip Clicked On", Integer.toString(index));
             listener.chipRemoved(index, chipData);
             return;
         }

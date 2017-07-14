@@ -479,11 +479,10 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         }
 
         public void removeChip(int index){
-            chipCloud.removeViewAt(index);
             for (int i = index + 1; i < chipCloud.getChildCount(); i++) {
                 Chip chip = (Chip) chipCloud.getChildAt(i);
                 Log.d("Chip Child, Index", chip.toString() + ", " + Integer.toString(i));
-                //chip.setIndex(i - 1);
+                chip.setIndex(i - 1);
                 //chipCloud.invalidate();
                 //chipCloud.requestLayout();
                 /*if(chipDatas != null){
@@ -492,6 +491,7 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                     labels[i - 1] = labels[i];
                 }*/
             }
+            chipCloud.removeViewAt(index);
             //update();
         }
 
