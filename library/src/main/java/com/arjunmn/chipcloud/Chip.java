@@ -113,7 +113,11 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
         setPadding(leftPad, topPad, rightPad, bottomPad);
 
         setText(label);
-        unselect();
+        if(mode != ChipCloud.Mode.ALL){
+            unselect();
+        }else{
+            select();
+        }
 
         if (typeface != null) {
             setTypeface(typeface);
