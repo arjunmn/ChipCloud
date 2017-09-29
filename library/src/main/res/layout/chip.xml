@@ -29,6 +29,6 @@
         app:layout_constraintLeft_toRightOf="@+id/chip"
         android:layout_width="32dp"
         android:layout_height="0dp"
-        android:src="@drawable/cancel_light_bg" />
+        android:src="@drawable/cancel_dark_bg" />
 
 </com.arjunmn.chipcloud.Chip>

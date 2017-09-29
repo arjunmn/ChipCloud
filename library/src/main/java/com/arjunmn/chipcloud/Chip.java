@@ -157,7 +157,7 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
             listener.chipRemoved(index, chipData);
             return;
         }
-        if (mode != ChipCloud.Mode.NONE)
+        if (mode != ChipCloud.Mode.NONE && mode != ChipCloud.Mode.ALL)
             if (selected && !isLocked) {
                 //set as unselected
                 unselect();
@@ -166,9 +166,9 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
                 }
             } else if (!selected) {
                 //set as selected
-                crossfader.startTransition(selectTransitionMS);
-
-                setTextColor(selectedFontColor);
+                select();
+                //crossfader.startTransition(selectTransitionMS);
+                //setTextColor(selectedFontColor);
                 if (listener != null) {
                     listener.chipSelected(index, chipData);
                 }
@@ -187,13 +187,15 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
     }
 
     private void unselect() {
-        if (selected) {
-            crossfader.reverseTransition(deselectTransitionMS);
-        } else {
-            crossfader.resetTransition();
+        if(mode != ChipCloud.Mode.ALL){
+            if (selected) {
+                crossfader.reverseTransition(deselectTransitionMS);
+            } else {
+                crossfader.resetTransition();
+            }
+            setTextColor(unselectedFontColor);
+            setRemovableIconSrc(R.drawable.cancel_light_bg);
         }
-        setTextColor(unselectedFontColor);
-        setRemovableIconSrc(R.drawable.cancel_light_bg);
     }
 
     @SuppressWarnings("deprecation")
