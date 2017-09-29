@@ -176,6 +176,7 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
         selected = true;
         crossfader.startTransition(selectTransitionMS);
         setTextColor(selectedFontColor);
+        setRemovableIconSrc(R.drawable.cancel_dark_bg);
         if (listener != null) {
             listener.chipSelected(index, chipData);
         }
@@ -187,8 +188,8 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
         } else {
             crossfader.resetTransition();
         }
-
         setTextColor(unselectedFontColor);
+        setRemovableIconSrc(R.drawable.cancel_light_bg);
     }
 
     @SuppressWarnings("deprecation")
@@ -358,5 +359,10 @@ public class Chip extends ConstraintLayout implements View.OnClickListener {
     public void setTextColor(int color){
         TextView tv = (TextView) this.findViewById(R.id.chip);
         tv.setTextColor(color);
+    }
+
+    public void setRemovableIconSrc(int src){
+        ImageView iv = (ImageView) this.findViewById(R.id.remove_chip);
+        iv.setImageResource(src);
     }
 }

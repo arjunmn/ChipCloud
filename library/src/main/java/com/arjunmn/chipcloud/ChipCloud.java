@@ -9,7 +9,7 @@ import android.util.Log;
 public class ChipCloud extends FlowLayout implements ChipListener {
 
     public enum Mode {
-        SINGLE, MULTI, REQUIRED, NONE
+        SINGLE, MULTI, REQUIRED, NONE, ALL
     }
 
     private Context context;
@@ -73,6 +73,8 @@ public class ChipCloud extends FlowLayout implements ChipListener {
                 case 3:
                     mode = Mode.NONE;
                     break;
+                case 4:
+                    mode = Mode.ALL;
                 default:
                     mode = Mode.SINGLE;
             }
@@ -159,7 +161,11 @@ public class ChipCloud extends FlowLayout implements ChipListener {
         this.mode = mode;
         for (int i = 0; i < getChildCount(); i++) {
             Chip chip = (Chip) getChildAt(i);
-            chip.deselect();
+            if(mode != Mode.ALL){
+                chip.deselect();
+            }else{
+                chip.select();
+            }
             chip.setLocked(false);
         }
     }
